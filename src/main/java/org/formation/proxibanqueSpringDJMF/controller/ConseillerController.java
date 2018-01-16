@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@SessionAttributes("client")
 public class ConseillerController {
 	
 	@Autowired
@@ -52,11 +54,11 @@ public class ConseillerController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public ModelAndView saveClient(@ModelAttribute("client") ClientBean clientBean) {	
+	public ModelAndView saveClient(@ModelAttribute("clientBean") ClientBean clientBean) {	
 		Client client = new Client();
 		Adresse adresse = new Adresse();
 		CompteCourant compteCourant= new CompteCourant();
-		CompteEpargne compteEpargne = new CompteEpargne();
+		
 		CarteVisaPremier visaPremier = new CarteVisaPremier();
 		client.setNom(clientBean.getNom());
 		client.setPrenom(clientBean.getPrenom());
@@ -82,29 +84,65 @@ public class ConseillerController {
 	@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView editClient(@PathVariable int id) {
 		Client client = conseillerService.edit(id);
-		return new ModelAndView("clientupdate", "client", client);
+		ClientBean clientBean = new ClientBean();
+		
+		clientBean.setId(client.getId());
+		clientBean.setNom(client.getNom());
+		clientBean.setPrenom(client.getPrenom());
+		clientBean.setEmail(client.getEmail());
+		clientBean.setTelephone(client.getNumTel());
+		clientBean.setAdresse(client.getAdresse().getRue());
+		clientBean.setCodePostal(client.getAdresse().getCodePostal());
+		clientBean.setVille(client.getAdresse().getVille());
+		
+		
+		return new ModelAndView("clientupdate", "client", clientBean);
 	}
 
 	@RequestMapping(value="/editsave", method = RequestMethod.POST)
-	public ModelAndView editsaveClient(@ModelAttribute("client") Client client) {
-		conseillerService.update(client);
+	public ModelAndView editsaveClient(@ModelAttribute("client") ClientBean clientBean) {
+		Client client = conseillerService.edit(Integer.parseInt(clientBean.getId()));
+				System.out.println(client.toString());
+			Adresse adresse = new Adresse();
+			
+			client.setNom(clientBean.getNom());
+			client.setPrenom(clientBean.getPrenom());
+			client.setEmail(clientBean.getEmail());
+			client.setNumTel(clientBean.getTelephone());
+			
+			adresse.setRue(clientBean.getAdresse());
+			adresse.setVille(clientBean.getVille());
+			adresse.setCodePostal(Long.parseLong(clientBean.getCodePostal()));
+			client.setAdresse(adresse);
+			
+			conseillerService.update(client);
+		
+		
 		return new ModelAndView("redirect:/conseiller");
 		}
-	
-	@RequestMapping(value="/delete", method = RequestMethod.GET)
+
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
 	public ModelAndView deleteClient(@PathVariable int id) {
 		conseillerService.delete(id);
 		return new ModelAndView("redirect:/conseiller");
 	}
 	
 	@RequestMapping(value="/virementidclient/{id}", method = RequestMethod.GET)
-	public ModelAndView virementClient(@PathVariable int id) {
+	public ModelAndView virementClient(@PathVariable int id, Model model) {
 		Client client = conseillerService.edit(id);
+		List<Client> listeClients = conseillerService.list();
+		model.addAttribute("listeclients", listeClients);
 		return new ModelAndView("virement", "client", client);
 	}
 	@RequestMapping(value="/actionvirement", method = RequestMethod.POST)
-	public ModelAndView virementAction(@ModelAttribute("clientdebit") Client clientDebit, @ModelAttribute("clientcredit") Client clientCredit) {
+	public ModelAndView virementAction(@ModelAttribute("client") Client clientDebit, @ModelAttribute("client") Client clientCredit, double montant) {
 		String msg = null;
+		try {
+			virementEvent.setMontant(montant);
+		} catch (InvalidVirementException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		virementEvent.setIdCompteDepart(clientDebit.getCpteC().getNumCompte());
 		virementEvent.setIdCompteCible(clientCredit.getCpteC().getNumCompte());
 		try {

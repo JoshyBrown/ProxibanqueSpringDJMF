@@ -55,7 +55,7 @@ ul {
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-${MsgJSP}
+
 
 <div class="main">
 <div class="row"> 
@@ -110,6 +110,7 @@ ${MsgJSP}
   <form:input path="numCarteVisaPremier" name="cartepremier" class="form-control" placeholder="numero carte visa premier" id="inputDefault" onkeyup="this.value=removeSpaces(this.value)" type="number" required="required"/>
 
 <p>&nbsp;</p>
+	<button type="reset" class="btn btn-warning" onclick="history.go(-1)">Retour</button>
     <button type="reset" class="btn btn-danger">Annuler</button>
     <button type="submit" class="btn btn-primary">Valider</button>
     </div>

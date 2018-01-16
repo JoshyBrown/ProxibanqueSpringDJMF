@@ -67,10 +67,10 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-comments"></i>
               </div>
-              <div class="mr-5">1 Nouveau(x) Message(s)!</div>
+              <div class="mr-5"><strong>Creer un nouveau Compte Client</strong></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
-              <span class="float-left">View Details</span>
+            <a class="card-footer text-white clearfix small z-1" href="nouveaucompteclient">
+              <span class="float-left"><strong>Cliquez pour creer Maintenant!</strong></span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -83,10 +83,10 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-list"></i>
               </div>
-              <div class="mr-5"><strong>Creer un nouveau Compte Client</strong></div>
+              <div class="mr-5"><strong>Nouvelles fonctions a venir</strong></div>
             </div>
-            <a class="card-footer text-white clearfix big z-1" href="nouveaucompteclient">
-              <span class="float-left">Creer Maintenant!</span>
+            <a class="card-footer text-white clearfix big z-1" href="#">
+              <span class="float-left">Revenez nous voir plus tard!</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
               </span>
@@ -139,7 +139,7 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
              
                   <td><a href="edit/${client.id}"
 		 class="btn btn-info" role="button">Modification</a></td>
-                  <td><a href="virementidclient${client.id}"
+                  <td><a href="virementidclient/${client.id}"
 		 class="btn btn-info" role="button">Virement</a></td>
               <td><a href="delete/${client.id}"
 		 class="btn btn-info" role="button">Supprimer</a></td>

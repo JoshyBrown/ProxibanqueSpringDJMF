@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ClientBean {
-
+	private String id;
 	/** The nom. */
 	private String nom;
 	
@@ -62,6 +62,16 @@ public class ClientBean {
 	
 	/** The id conseiller. */
 	private String idConseiller;
+
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNom() {
 		return nom;
@@ -205,6 +215,17 @@ public class ClientBean {
 
 	public void setIdConseiller(String idConseiller) {
 		this.idConseiller = idConseiller;
+	}
+
+
+	public void setCodePostal(long codePostal2) {
+		// TODO Auto-generated method stub
+		this.codePostal= Long.toString(codePostal2);
+	}
+
+	public void setId(int id2) {
+		// TODO Auto-generated method stub
+		this.id=Integer.toString(id2);
 	}
 	
 	

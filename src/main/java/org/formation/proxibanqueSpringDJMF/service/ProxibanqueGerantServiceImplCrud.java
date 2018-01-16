@@ -73,7 +73,7 @@ public class ProxibanqueGerantServiceImplCrud implements IProxibanqueService<Con
 		conseillerDAO.save(conseiller);
 		
 	}
-	/*
+	
 	@PostConstruct
 	public void createSomeConseiller(){
 	 Conseiller conseiller = new Conseiller();
@@ -84,5 +84,5 @@ public class ProxibanqueGerantServiceImplCrud implements IProxibanqueService<Con
 	 conseillerDAO.save(conseiller);
 
 	}
-	*/
+	
 }

@@ -28,13 +28,7 @@ public class ProxibanqueConseillerServiceImplCrud implements IProxibanqueService
 	 * @see org.formation.proxibanqueSpringDJMF.service.IProxibanaueConseillerService#addClient(org.formation.proxibanqueSpringDJMF.entity.Client)
 	 */
 	/*
-	@PostConstruct
-	public void createSomeGerant(){
-		addClient(new Client("BritneyJPA","Spears","log2JPA","mdp2",new Adresse(36, "avenue du JPAmaine", "Paris")));
-		
-
-	}
-*/
+	
 	@Override
 	public void add(Client c) {
 		crudClientDAO.save(c);
@@ -77,6 +71,13 @@ public class ProxibanqueConseillerServiceImplCrud implements IProxibanqueService
 		crudClientDAO.save(c);
 
 	}
+
+	@Override
+	public void add(Client c) {
+		// TODO Auto-generated method stub
+		crudClientDAO.save(c);
+	}
+
 
 	
 

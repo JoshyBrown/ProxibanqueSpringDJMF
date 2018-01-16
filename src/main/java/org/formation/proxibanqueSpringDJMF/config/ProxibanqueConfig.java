@@ -127,7 +127,7 @@ public class ProxibanqueConfig {
 		
 		//Custom properties can be set using Properties
 		Properties jpaProperties = new Properties();
-		jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+		jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 		
 		entityManagerFactory.setJpaProperties(jpaProperties);
 		

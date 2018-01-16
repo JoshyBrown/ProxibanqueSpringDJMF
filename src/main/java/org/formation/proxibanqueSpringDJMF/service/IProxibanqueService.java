@@ -10,6 +10,6 @@ public interface IProxibanqueService <T, Integer> {
 	public void	delete(int id);
 	public T edit(int id);
 	public void	update(T t);
-	
+
 
 }

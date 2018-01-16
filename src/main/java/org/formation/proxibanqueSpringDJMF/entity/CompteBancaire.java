@@ -1,6 +1,8 @@
 package org.formation.proxibanqueSpringDJMF.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -20,6 +22,7 @@ public abstract class CompteBancaire {
 	
 	/** The num compte. */
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private long numCompte;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,10 +31,10 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
 
 	<ul class="nav nav-tabs">
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="./ConseillerServlet"><strong>Home</strong></a></li>
+			href="${pageContext.request.contextPath}/conseiller"><strong>Home</strong></a></li>
 			
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="./NouveauCompteServlet"><strong>Nouveau Compte</strong></a></li>
+			href="${pageContext.request.contextPath}/nouveaucompteclient"><strong>Nouveau Compte</strong></a></li>
 		<!--  
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
 			href="./ClientUpdateServlet"><strong>Mise à Jour Compte Client</strong></a></li>
@@ -48,7 +49,7 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-${MsgJSPUpdate}
+
 
 <div class="main">
 <div class="row"> 
@@ -65,59 +66,94 @@ ${MsgJSPUpdate}
 <div class="col-xs-1">
 </div>
 <div class="col-lg-4">
-<form name="updateform" method="post" action="editsave">
+<form:form name="client" method="post" action="${pageContext.request.contextPath}/editsave" commandName="client">
 <div class="form-group">
-	<label class="col-form-label" for="inputDefault">IdClient</label>
-  <input name="id" class="form-control" value="${client.id}" id="inputDefault" type="text" readonly>
+<label class="col-form-label" for="inputDefault">Code Postal</label>
+  <form:input path="id" name="id" class="form-control" placeholder="id" id="inputNumber" type="number" required="required" hidden="hidden"/>
 
-  <label class="col-form-label" for="inputDefault">Nom</label>
-  <input name="nom" class="form-control" value="${client.nom}" id="inputDefault" type="text">
+	<label class="col-form-label" for="inputDefault">Nom</label>
+ <form:input path="nom" name="nom" class="form-control" placeholder="nom" id="inputDefault" onkeyup="fullLetter(document.client.nom), this.value=removeExtraSpaces(this.value)" type="text" required="required"/> 
 
-  <label class="col-form-label" for="inputDefault">Prenom</label>
-  <input name="prenom" class="form-control" value="${client.prenom}" id="inputDefault" type="text" >
+ <label class="col-form-label" for="inputDefault">Prenom</label>
+  <form:input path="prenom" name="prenom" class="form-control" placeholder="prenom" id="inputDefault" onkeyup="fullLetter(document.client.prenom), this.value=removeExtraSpaces(this.value)" type="text" required="required"/>
 
   <label class="col-form-label" for="inputDefault">Adresse</label>
-  <input name="adresse" class="form-control" value="${client.adresse.rue}" id="inputDefault" type="adresse">
+  <form:input path="adresse" name="adresse" class="form-control" placeholder="adresse" id="inputDefault" onkeyup="this.value=removeExtraSpaces(this.value)" type="adresse" required="required"/>
 
   <label class="col-form-label" for="inputDefault">Code Postal</label>
-  <input name="codepostal" class="form-control" value="${client.adresse.codePostal}" id="inputDefault" type="number">
+  <form:input path="codePostal" name="codepostal" class="form-control" placeholder="code postal" id="inputNumber" type="number" required="required"/>
 
   <label class="col-form-label" for="inputDefault">Ville</label>
-  <input name="ville" class="form-control" value="${client.adresse.ville}" id="inputDefault" type="text">
+  <form:input path="ville" name="ville" class="form-control" placeholder="ville" id="inputDefault" onkeyup="fullLetter(document.client.ville), this.value=removeExtraSpaces(this.value)" type="text" required="required"/>
 
-  <label class="col-form-label" for="inputDefault">Telephone</label>
-  <input name="telephone" class="form-control" value="${client.numTel}" id="inputDefault" type="text">
+  <label class="col-form-label" for="inputDefault">Telephone (Exemple Format: +33140506070)</label>
+  <form:input path="telephone" name="telephone" class="form-control" placeholder="telephone (Format: +33140506070)" id="inputDefault" type="tel" pattern='[\+]\d{11}' required="required"/>
+ <!-- <input type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' title='Phone Number (Format: +99(99)9999-9999)'> -->
 
  <label class="col-form-label" for="inputDefault">Email</label>
-  <input name="email" class="form-control" value="${client.email}" id="inputDefault" type="email">
+  <form:input path="email" name="email" class="form-control" placeholder="email" id="inputDefault" type="email" required="required"/>
 
-  <label class="col-form-label" for="inputDefault">Numero de Compte Courant</label>
-  <input name="comptecourant" class="form-control" value="${client.cpteC.numCompte}" id="inputDefault" type="text" readonly>
-  
-  <label class="col-form-label" for="inputDefault">Solde Compte Courant</label>
-  <input name="soldecomptecourant" class="form-control" value="${client.cpteC.soldeCompte}" id="inputDefault" type="text">
-    
-  <label class="col-form-label" for="inputDefault">Date d'ouverture Compte Courant</label>
-  <input name="datecomptecourant" class="form-control" value="${client.cpteC.date}" id="inputDefault" type="date">
-
- <label class="col-form-label" for="inputDefault">Numero de Compte Epargne</label>
-  <input name="compteepargne" class="form-control" value="${client.cpteEp.numCompte}" id="inputDefault" type="text" readonly>
-  
-  <label class="col-form-label" for="inputDefault">Solde Compte Epargne</label>
-  <input name="soldecompteepargne" class="form-control" value="${client.cpteEp.soldeCompte}" id="inputDefault" type="text">
-
- <label class="col-form-label" for="inputDefault">Date d'ouverture Compte Epargne</label>
-  <input name="datecompteepargne" class="form-control" value="${client.cpteEp.date}" id="inputDefault" type="date">
-
-
-<p>&nbsp;</p>
-    <button type="submit" class="btn btn-primary">Valider</button>
-    <button type="reset" class="btn btn-primary">Annuler</button>
+				<p>&nbsp;</p>
+					<button type="reset" class="btn btn-warning" onclick="history.go(-1)">Retour</button>
+				    <button type="reset" class="btn btn-danger">Annuler</button>
+				    <button type="submit" class="btn btn-primary">Valider</button>
     </div>
-    </form>
+    
+    </form:form>
  </div>
  </div>
 </div>
+<script>
+ function fullLetter(inputTXT) {
+              
+              var letters=/^[a-z\-\s]+$/i;
+              if(inputTXT.value.match(letters)){
+                
+                return true;
+              } else {
+                
+                alert("Vous devez entrer un caratere!");
+              // letters=letters.replace(/[0-9]+/g,'');
+              // document.write(letters);
+                return false;
+              }
+          }
 
+ function removeExtraSpaces(stringInput){
+ return stringInput.split('  ').join(' ');
+  //return stringInput.replace(/\s+/g,' ').trim();
+ }
+
+ function removeSpaces(string){
+            return string.split(' ').join('');
+          }numCarteVisaPremier
+ function fullNumeral(inputNUM) {
+              
+              var numbers=/^[0-9\.]+$/;
+
+              if(inputNUM.value.match(numbers)){
+                return true;
+              } else {
+                
+                alert("Vous devez entrer un chiffre!");
+
+                return false;
+              }
+          }
+
+function twoDecimal(){
+var inputField = document.getElementById('inputDecimal');
+ 
+inputField.addEventListener('change', function() {
+    var v = parseFloat(this.value);
+    if (isNaN(v)) {
+        this.value = '';
+    } else {
+      this.value = this.value.replace (/(\.\d\d)\d+|([\d.]*)[^\d.]/, '$1$2');
+        //this.value = v.toFixed(2);
+    }
+});
+}
+    </script>
 </body>
 </html>

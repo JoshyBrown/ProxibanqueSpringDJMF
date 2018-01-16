@@ -30,12 +30,12 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
   
 <div class="navbar fixed-top">
 
-	<ul class="nav nav-tabs">
+<ul class="nav nav-tabs">
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="./ConseillerServlet"><strong>Home</strong></a></li>
+			href="${pageContext.request.contextPath}/conseiller"><strong>Home</strong></a></li>
 			
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="./NouveauCompteServlet"><strong>Nouveau Compte</strong></a></li>
+			href="${pageContext.request.contextPath}/nouveaucompteclient"><strong>Nouveau Compte</strong></a></li>
 	<!-- 	
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
 			href="./ClientUpdateServlet"><strong>Mise à Jour Compte Client</strong></a></li>
@@ -69,7 +69,7 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
 		<form name="virementform" method="post" action="actionvirement">
 <div class="form-group">
 	<label class="col-form-label" for="inputDefault">Id Client</label>
-  <input name="nom" class="form-control" value="${client.id}" type="number" >
+  <input name="nom" class="form-control" value="${client.id}" type="number" hidden >
 
   <label class="col-form-label" for="inputDefault">Nom</label>
   <input name="nom" class="form-control" value="${client.nom}" type="text" readonly>
@@ -84,8 +84,8 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
     </select>
 <p>&nbsp;</p>
    <label class="col-form-label" for="inputDefault"><strong> Montant du transfert </strong></label>
-  <input name="montant" class="form-control" placeholder="Veuillez indiquer le montant du transfert" id="inputDefault" type="text" >
-
+  <input path="soldeCompteCourant" name="soldecptecourant" class="form-control" placeholder="solde compte courant type 0.00" id="inputDecimal" type="number" step='0.01' required="required">
+  
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -93,19 +93,16 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
     <div class="col-lg-12">
 	<legend>Compte a Crediter</legend>
 	
-
-<select id="select" name="clientcrediteur">
-<c:forEach items="${ALLCLIENT}" var="clientcredit" >
+<div class="form-group">
+ <select class="form-control" id="select" name="clientcrediteur">
+<c:forEach items="${listeclients}" var="clientcredit" >
   <option value="${clientcredit.id} - comptecourant" >${clientcredit.nom} ${clientcredit.prenom} ${clientcredit.cpteC.numCompte}</option> 
   </c:forEach>
 </select>
-
-
-<!--
-	<label class="col-form-label" for="inputDefault">${ALLCLIENT}</label>
- 	 <input name="nom" class="form-control" value="" type="number">
-
-
+</div>
+<!-- 
+<c:forEach items="${listeclients}" var="clientcredit" >
+  
   <label class="col-form-label" for="inputDefault">Nom</label>
   <input name="nom" class="form-control" value="${clientcredit.nom}" type="text" readonly>
 
@@ -117,7 +114,9 @@ background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,2
         <option>${clientcredit.cpteC.numCompte}</option>
         <option>${clientcredit.cpteEp.numCompte}</option>
     </select>
- -->	   
+      </c:forEach>
+ -->
+    
 <p>&nbsp;</p>
 	
 	<button type="reset" class="btn btn-danger btn-lg">Annuler</button>

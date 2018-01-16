@@ -44,7 +44,7 @@ public class ProxibanqueCreationGerantImpl implements IProxibanqueService<Gerant
 		// TODO Auto-generated method stub
 		gerantDao.save(gerant);
 	}
-	/*
+	
 	@PostConstruct
 	public void createSomeGerant(){
 	 Gerant gerant = new Gerant();
@@ -55,5 +55,5 @@ public class ProxibanqueCreationGerantImpl implements IProxibanqueService<Gerant
 	 gerantDao.save(gerant);
 
 	}
-*/
+
 }

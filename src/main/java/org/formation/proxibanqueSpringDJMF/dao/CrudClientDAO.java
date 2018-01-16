@@ -16,6 +16,7 @@ public interface CrudClientDAO extends JpaRepository<Client, Integer> {
 	// customized methods here
 
 	List<Client> findAllClientByNom(String nom);
-
+	
+	List<Client> findAllClientById(int id);
 
 }
